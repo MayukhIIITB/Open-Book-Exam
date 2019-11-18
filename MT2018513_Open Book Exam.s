@@ -14,7 +14,7 @@
 __main  FUNCTION	
 
 		
-		VLDR.F32 S14,=360;Holding 'x' value(in degrees)
+		VLDR.F32 S14,=45;Holding 'x' value(in degrees)
 		
 	 	VLDR.F32 S15,=0.0174533; changing degress into radians 
 		
@@ -36,7 +36,7 @@ __main  FUNCTION
 		
 		VLDR.F S10,= 1 ; 
 		
-		LDR R3,= 0x00000005 ; iteration
+		LDR R3,= 0x00000008 ; iteration
 		
 		VMOV.F S3,R3 ; 
 		
@@ -241,6 +241,7 @@ points
 	    VCVT.F32.U32 S22,S22;
 	   
 		VADD.F S19,S17,S21 ; New X coordinate X=320+x
+		
 		
 		VADD.F S20,S18,S22  ;New Y coordinate Y=240+y
 		
