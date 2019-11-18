@@ -10,20 +10,41 @@
 	 AREA     CIRCLE, CODE, READONLY
      EXPORT __main
 	 IMPORT printMsg
+	 ;IMPORT printMsg4p
      ENTRY 
 __main  FUNCTION	
 
-		
-		VLDR.F32 S14,=45;Holding 'x' value(in degrees)
-		
+		VLDR.F32 S31,=1;
+		VLDR.F32 S14,=1;Holding 'x' value(in degrees)
+		MOV R8, #0;
 	 	VLDR.F32 S15,=0.0174533; changing degress into radians 
-		
+ANGLE	BL CONV
 		VMUL.F32 S0,S14,S15 ; changing degress into radians 
+		VADD.F32 S14,S14,S31;
+		ADD R8, R8, #1;
+		
+		
+		VCVT.S32.F32 S19,S19
+		
+		VMOV.F32 R0,S19;
+		
+		VCVT.S32.F32 S20,S20
+		
+		VMOV.F32 R1,S20;
+
+		
+		MOV R2, #50;
+		BL printMsg4p
+		CMP R8,#360;
+		BNE ANGLE
+		
+		
+
 		
 		;VLDR.F S14,=120;x in degree
 		;VLDR.F S0,= 2 ; value of x
 		
-		VMOV.F S4,S0  ; value of x
+CONV	VMOV.F S4,S0  ; value of x
 		
 		VLDR.F S5,= 1
 		
@@ -224,7 +245,7 @@ oddeven
 		
 points	
 		
-		VLDR.F32 S16,=3;Holding radius 'r' value
+		VLDR.F32 S16,=50;Holding radius 'r' value
 		
 		;// Calculation Of X and Y coordinates with zero as centre
 		
@@ -240,14 +261,13 @@ points
 		VMOV.F S22,R1 ; 
 	    VCVT.F32.U32 S22,S22;
 	   
-		VADD.F S19,S17,S21 ; New X coordinate X=320+x
+		VADD.F32 S19,S17,S21 ; New X coordinate X=320+x
 		
 		
-		VADD.F S20,S18,S22  ;New Y coordinate Y=240+y
+		VADD.F32 S20,S18,S22  ;New Y coordinate Y=240+y
 		
+		BX LR
 		;B printMsg	 ; Refer to ARM Procedure calling standards.
 stop    B stop ; stop program
         ENDFUNC
-        END 		
-		
-		
+        END
