@@ -9,8 +9,8 @@
 
 	 AREA     CIRCLE, CODE, READONLY
      EXPORT __main
-	 IMPORT printMsg
-	 ;IMPORT printMsg4p
+	 ;IMPORT printMsg
+	 IMPORT printMsg4p
      ENTRY 
 __main  FUNCTION	
 
@@ -48,7 +48,7 @@ CONV	VMOV.F S4,S0  ; value of x
 		
 		VLDR.F S5,= 1
 		
-		LDR R6,= 0x00000000 ;
+		LDR R7,= 0x00000000 ;
 		
 		
 		VLDR.F S6,= 1
@@ -57,26 +57,26 @@ CONV	VMOV.F S4,S0  ; value of x
 		
 		VLDR.F S10,= 1 ; 
 		
-		LDR R3,= 0x00000008 ; iteration
+		LDR R2,= 0x00000008 ; iteration
 		
-		VMOV.F S3,R3 ; 
+		VMOV.F S3,R2 ; 
 		
 		VCVT.F32.U32 S3,S3
 		
-		ADD R2,R3,R3 ; 
+		ADD R3,R2,R2 ; 
 		
-		VMOV.F S2,R2 ; 
+		VMOV.F S2,R3 ; 
 		
 		VCVT.F32.U32 S2,S2
 		
 		
-		LDR R4,= 0x00000000 ; 
+		LDR R5,= 0x00000000 ; 
 		
 		
 		LDR R10,= 0x00000000 ; 
 		
 		
-		LDR R5,= 0x00000000 ; 
+		LDR R4,= 0x00000000 ; 
 		
 		
 		LDR R0,= 0x00000001 ;
@@ -87,7 +87,7 @@ CONV	VMOV.F S4,S0  ; value of x
 nxt
 		LDR R12,= 0x00000000 ; 
 		
-		CMP R10,R3
+		CMP R10,R2
 		
 		BNE cosf
 		
@@ -96,7 +96,7 @@ nxt
 		LDR R12,= 0x00000001 ; R12 = 1 for sin
 		
 		
-		LDR R4,= 0x00000000 ;
+		LDR R5,= 0x00000000 ;
 		
 		LDR R10,= 0x00000000 ; 
 		
@@ -106,7 +106,7 @@ nxt
 		
 nxtSINE
 		
-		CMP R10,R3 ;
+		CMP R10,R2 ;
 		
 		BNE sinf
 		
@@ -120,17 +120,17 @@ cosf
 		B oddeven
 sinf
 
-		AND R7,R4,#0x00000001
+		AND R6,R5,#0x00000001
 		
-		ADD R4,R4,R4 
+		ADD R5,R5,R5 
 		
-		ADD R4,#0x00000001
+		ADD R5,#0x00000001
 		
-		CMP R4,#0x00000001
+		CMP R5,#0x00000001
 		
-		LDR R5,= 0x00000000 ; 
+		LDR R4,= 0x00000000 ; 
 		
-		LDR R6,= 0x00000000 ;
+		LDR R7,= 0x00000000 ;
 		
 		VLDR.F S5,= 1
 		
@@ -141,7 +141,7 @@ sinf
 L 
 		VDIV.F S8,S0,S5
 		
-		CMP R7,R0
+		CMP R6,R0
 		
 		ITE LT
 		
@@ -151,17 +151,17 @@ L
 		
 		ADD R10,#0x00000001
 		
-		MOV R4,R10
+		MOV R5,R10
 		
 		VLDR.F S5,= 1
 		
 		VMOV.F S0,S4
 		
-		LDR R6,= 0x00000000 ;
+		LDR R7,= 0x00000000 ;
 		
 		VLDR.F S6,= 1
 		
-		LDR R5,= 0x00000000 ; 
+		LDR R4,= 0x00000000 ; 
 		
 		CMP R12,#0x00000001
 		
@@ -172,22 +172,22 @@ L
 		
 
 cos 
-		ADD R4,R4,R4
+		ADD R5,R5,R5
 		
-		CMP R4,#0x00000000
+		CMP R5,#0x00000000
 		
 		BEQ fitr
 		
 		BNE raise1
 raise1		
 
-		SUB R11,R4,#0x00000001
+		SUB R11,R5,#0x00000001
 		
 		VMUL.F S0,S0,S4 ; 
 		
-		ADD R5,#0x00000001
+		ADD R4,#0x00000001
 		
-		CMP R5,R11
+		CMP R4,R11
 		
 		BNE raise1
 		
@@ -211,34 +211,34 @@ fitrsin
 		
 		ADD R10,#0x00000001
 		
-		mov r4,r10
+		mov R5,R10
 		
 		B nxtSINE
 		
 factorial 
-		CMP R4,#0x00000000
+		CMP R5,#0x00000000
 		
 		BEQ fitr
 		
 		VMUL.F S5,S5,S6 ; factorial value
 		
 		
-		ADD R6,#0x00000001
+		ADD R7,#0x00000001
 		
-		VMOV.F S6,R6
+		VMOV.F S6,R7
 		
 		VCVT.F32.U32 S6,S6
 		
 		VADD.F S6,S6,S10
 		
-		CMP R6,R4
+		CMP R7,R5
 		
 		BNE factorial
 		
 		BEQ L
 		
 oddeven
-		AND R7,R4,#0x00000001
+		AND R6,R5,#0x00000001
 		
 		B cos
 		
