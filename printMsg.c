@@ -1,4 +1,4 @@
-#include "TM4C123GH6PM.h"
+#include "STM32f4xx.h"
 #include <string.h>
 void printMsg(const int a)
 {
